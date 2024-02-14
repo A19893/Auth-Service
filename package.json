@@ -1,0 +1,31 @@
+{
+  "name": "authservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "db:create": "cross-env npx sequelize-cli db:create",
+    "db:drop": "cross-env npx sequelize-cli db:drop",
+    "up": "cross-env npx sequelize-cli db:migrate",
+    "undo": "cross-env npx sequelize-cli db:migrate:undo",
+    "undo:all": "cross-env npx sequelize-cli db:migrate:undo:all",
+    "seed": "cross-env npx sequelize-cli db:seed:all",
+    "seed:undo": "cross-env npx sequelize-cli db:seed:undo",
+    "seed:undo:all": "cross-env npx sequelize-cli db:seed:undo:all",
+    "status": "npx sequelize-cli db:migrate:status",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.37.0",
+    "sequelize-cli": "^6.6.2"
+  }
+}
