@@ -40,7 +40,20 @@ class UserService {
             throw {error}
         }
     }
-
+    
+    async isAuthenticated (token){
+        const response = this.verifyToken(token);
+        if(!response){
+            throw {error: "Invalid Token"}
+        }
+        const user = this.userRepository.getById(response.id);
+        if(!user){
+            throw {error: "No user with the corresponding Token"}
+        }
+        else{
+            return "User is Authenticated"
+        }
+    }
     #createToken(user){
        try{
          const token = jwt.sign(user,process.env.AUTH_SECRET_KEY,{expiresIn: '1h'});
@@ -52,7 +65,7 @@ class UserService {
        }
     }
 
-    #verifyToken(token){
+    verifyToken(token){
         try{
             const response = jwt.verify(token, process.env.AUTH_SECRET_KEY)
             return response;
