@@ -6,4 +6,5 @@ const router = require("express").Router();
 router.post('/users', AuthRequestMiddleware.ValidateUserSignup ,userController.create);
 router.post('/signIn', userController.login);
 router.get('/isAuthenticated', userController.isAuthenticated);
+router.get('/isAdmin', AuthRequestMiddleware.validateAdminRequest, userController.isAdmin)
 module.exports = router;
