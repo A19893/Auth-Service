@@ -12,8 +12,12 @@ class UserService {
           return user;
         }
         catch(error){
-            console.log("Something went wrong in the service layer");
-            throw {error}
+            console.log(error)
+            // if(error.name === 'SequelizeValidationError'){
+            //     throw error;
+            // }
+            // console.log("Something went wrong in the service layer");
+            // throw {error} 
         }
     }
 
@@ -21,7 +25,6 @@ class UserService {
         const {email, password} = data;
         try{
             const user = await this.userRepository.getByEmail(email)
-            if(user){
                 const isPassWordValid = this.#checkPassword(password, user.password);
                 if(!isPassWordValid){
                     throw {error:"Email/Password Invalid"}
@@ -30,12 +33,12 @@ class UserService {
                     const  token = this.#createToken({email: user.email, id: user.id});
                     return token;
                 }
-            }
-            else{
-                throw {error:"Email/Password Invalid"}
-            }
         }
         catch(error){
+            console.log(error)
+            if(error.name === 'AttributeNotFoundError'){
+                throw error;
+            }
             console.log("Something went wrong in the service layer");
             throw {error}
         }
