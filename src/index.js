@@ -1,7 +1,7 @@
 const express = require("express");
 const { PORT } = require("./config/serverConfig");
 // const { UserService } = require("./services");
-const { User, Role } = require("./models");
+// const { User, Role } = require("./models");
 const db = require("./models");
 const setupAndStartServer = async () => {
   const app = express();

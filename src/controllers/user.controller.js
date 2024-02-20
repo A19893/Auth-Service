@@ -30,7 +30,7 @@ const login = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(error.statusCode).json({
+    return res.status(error.statusCode || 500).json({
       message: error.message,
       data: {},
       success: false,
@@ -81,7 +81,12 @@ const isAdmin = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   try {
-
+  const response = await userService.update(req.params);
+  return res.status(200).json({
+    // data: response,
+    success: true,
+    message: "Successfully done with verification of user",
+  });
   } catch (error) {
     console.log(error);
     return res.status(500).json({

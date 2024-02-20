@@ -17,7 +17,24 @@ class UserRepository {
       throw new AppErrors('ServerError');
     }
   } 
-
+ 
+  async update(criteria, payload, options) {
+    try {
+      const user = await User.update(payload,{
+        where: criteria,
+        options,
+        returning : true
+      });
+      return user;
+    } catch (error) {
+      console.log(error)
+      if(error.name === 'SequelizeValidationError'){
+      throw new ValidationError(error)
+      }
+      console.log("Something went wrong in user repo");
+      throw new AppErrors('ServerError');
+    }
+  }
   async destroy(userId) {
     try {
       await User.destroy({
