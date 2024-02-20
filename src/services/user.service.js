@@ -1,23 +1,36 @@
 const { UserRepository } = require("../repositories");
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const crypto = require("crypto")
+
+const TokenRepository = require("../repositories/token.repository");
+const { sequelize } = require("../models");
 class UserService {
     constructor(){
         this.userRepository = new UserRepository();
+        this.tokenRepository = new TokenRepository();
     }
 
     async create(data){
+        const transaction  = await sequelize.transaction();
         try{
-          const user = await this.userRepository.create(data);
+            let options = {
+                transaction
+            }
+          const user = await this.userRepository.create(data, options);
+          const token = crypto.randomBytes(32).toString('hex');
+          await this.tokenRepository.create({userId:user.id,token:token}, options)
+          await transaction.commit();
           return user;
         }
         catch(error){
+            await transaction.rollback();
             console.log(error)
-            // if(error.name === 'SequelizeValidationError'){
-            //     throw error;
-            // }
-            // console.log("Something went wrong in the service layer");
-            // throw {error} 
+            if(error.name === 'SequelizeValidationError'){
+                throw error;
+            }
+            console.log("Something went wrong in the service layer");
+            throw error;
         }
     }
 

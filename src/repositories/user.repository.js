@@ -5,9 +5,9 @@ const AppErrors = require("../utils/error-handler");
 const ValidationError = require("../utils/validation-error");
 
 class UserRepository {
-  async create(data) {
+  async create(data, options) {
     try {
-      const user = await User.create(data);
+      const user = await User.create(data, options);
       return user;
     } catch (error) {
       if(error.name === 'SequelizeValidationError'){

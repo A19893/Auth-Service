@@ -8,18 +8,12 @@ module.exports = {
       [
         {
           name: "Admin",
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
           name: "Customer",
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
           name: "Airlines-Mangement",
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
       ],
       {}
